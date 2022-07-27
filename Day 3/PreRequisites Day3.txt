@@ -1,0 +1,129 @@
+PATH VS CLASSPATH environmental Variables
+
+PATH::It is the variable used by the operating system to give support for the users to access .exe
+       .cmd,.bat file from any location of their local machine.
+       It is the variable associated with Operating System,It is no where related to Java Language.
+       To give access for all .exe,.cmd,.bat file operating system had given one inbuilt variable
+       called PATH through which user can set his .exe files which he needs to access from all
+       the locations of his local machine.
+
+Types of files which are used for execution
+1 .exe
+2 .bat
+3 .cmd
+
+Created a useredefined .bat file as shown below
+run.bat
+ date
+ time
+ ver
+
+
+D:\\AdvancedJava>run.bat
+output::success
+
+C:>run.bat
+output::Failure
+
+solution1:copy the .bat file from D:\\Advancedjava and paste it in C:>
+          C:>run
+          output::success.
+          Disadvantage:since same copy would be available in multiple drivers,unnecessaliry 
+                       memory would be wasted.
+
+Solution2:Given by the Operating sysytem in the form of Envrionmental variable
+          run.bat file is available inside D:\\AdvancedJava\\run.bat
+          This .bat file,should be used from all the drives of my local system.
+          PATH=D:\\AdvancedJava;  
+          set this PATH variable in commandprompt or through GUI panel
+          
+
+Note::When we install java,java by default would be installed inside C:\\programfiles\java
+      inside java folder we have bin which contains all .exe files which is required for the programmer
+      to run .java files
+      Since we dont save our .java files inside  C:\\programfiles\\java\bin,and we want to access
+     all the .exe files from different location of our computer,it is good practise to give the
+     information of .exe files to O.S in the form of path envrionmental variable.
+
+     GUIPanel:path:C:\\programfiles\\java\bin;<old_values>; 
+
+     ***Any changes made in the environmental variable through command prompt would be having
+        the scope only in the command prompt where it is made.
+     ***To make the changes to be visible to all the command prompts,we need to set it 
+        globally by taking the help of GUI.
+          ThisPC->Properties->environmentalvariables->systemvariables->add .exe location
+          to the Path environmetal variables
+
+CLASSPATH Environmental Varaible
+DiagramaticWay
+  D
+    AdvancedJava
+            com
+               abc
+                  wish
+                     WishMessageGenerator.class
+            WishMessageGenerator.java
+
+
+code::
+import com.abc.wish.WishMessageGenerator;
+public class MainApp{
+
+	public static void main(String[]args){
+            WishMessageGenerator wishMessage=new WishMessageGenerator();
+            String data=wishMessage.sayHello("kohli");
+	    System.out.println(data);
+	}
+}
+
+D:\\AdvancedJava>javac -d .  WishMessgeGenerator.java
+
+-d:: this tells the java compiler to generate the package for the specified java class
+. :: this specifies the folder to be created inside the current location(D:\\AdvancedJava)
+
+
+Diagrmatic Way
+     C
+       MainApplication
+               MainApp.java
+
+code::
+import com.abc.wish.WishMessageGenerator;
+public class MainApp{
+
+	public static void main(String[]args){
+            WishMessageGenerator wishMessage=new WishMessageGenerator();
+            String data=wishMessage.sayHello("kohli");
+	    System.out.println(data);
+	}
+}
+
+In the above application(MainApp.java),if we use api's from  useredefined or thirdparty the program would
+fail to compile.In order to resolve the above mentioned problem,we need to inform the jdk s/w about the 
+api's availabilty through CLASSPATH environmental variable.
+
+Solution1:Setting it through command prompt for local visibility
+C:\\MainApplication> set CLASSPATH="D:\AdvancedJava"
+
+Solution2:Setting it through GUI Panel
+   	ThisPC->Properties->environmentalvariables->systemvariables->add api location
+          to the ClassPATH environmetal variables
+
+Solution3:While compiling the code only we can specify to jdk s/w  through the option called
+           -cp.
+           Compiling: javac -cp "D:\AdvancedJava;" MainApp.java
+           Executing: java -cp "D:\AdvancedJava;" MainApp
+
+
+NOTE::What is the difference b/w keeping api's in ext folder vs setting in classpath envrionmental variable?
+       Ans.Inside ext folder,we cannot keep folders,we should always keep .jars only
+           W.R.T CLASSPATH variable,we can keep folders as well as api's
+           
+           Extension class Loader support is avialable only till jdk8.
+           ClASSPATH facility is available for all JDK version(8,9,10,11,12,....)
+ 
+           Extension class Loader if we make any changes it would be avialable even for already opened
+           command prompot
+           CLASSPATH facitlity if it set through the command prompt,then only to the current command
+           prompt it would be accessible,to new command prompts it would not be accessible.
+           

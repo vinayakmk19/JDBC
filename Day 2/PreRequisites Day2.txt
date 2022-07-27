@@ -1,0 +1,117 @@
+API:It stands for Application Programming Interface
+    Every API would be given to Java programmer in the form jars.
+    Jar stands for Java Archieve file.
+
+    jar=library=api's=packages=set of classes/interfaces/enums's/annotation
+
+In java languages jar's can be classified into 3 types
+1.Predefined jars
+     These are the jars given up the s/w vendors who had built the language.
+      eg:rt.jar(entire java language is in the form of predefined jar)
+2.Userdefined jars
+     These are the jar build by the programmer according to his needs.
+      eg:wishapi.jar(programmer would create the jar)
+3.Thirdparty jars
+     These are the jars given by the third party vendors for java developers to
+     increase the pace of application development(RAD:Rapid Application Development).
+     eg:hibernate.jar,jdbcdriver.jar,spring-mvc.jar,spring-aop.jar.....
+
+  Note::FirstParty means developer whos uses the language to build the application
+                eg:Devleopers
+        SecondParty means the s/w vendor who gives the language for users.
+                 eg:(Oracle)
+        ThirdParty  means the s/w vendors who gives the jar to build the application
+        rapidly(eg:Hibernate,Spring)
+
+Steps followed to create a jar
+     D
+       AdvancedJava
+               Sample1.txt
+               Sample2.txt
+
+In order to create a jar ,we use inbuilt java tool given by oracle coropartion
+   command:jar
+   Options used are
+    1.c::this is used to create a jar
+    2.v::this is used to display verbose information
+    3.t::this is used to display jar contents in the table format
+    4.u::this is used to update the jar contenet
+    5.x::this option is used to take the content from jar file.
+    6.f::this option is used to specify the file name of the jar.
+
+Scenario1:Creating a jar
+D:\\AdvancedJava>jar cf demo.jar .   ========>. represents the current folder files.               
+D:\\AdvancedJava> 
+
+Scenario2:Displaying the contents of the jar 
+D:\\AdvancedJava>jar tf demo.jar
+META-INF/
+META-INF/MANIFEST.MF
+Sample1.txt
+Sample2.txt
+
+Note:Whenever we create a jar,the jar tool will automatically creates a folder by the name
+     META-INF.Inside this folder one file will be generated automatically with the name
+     MANIFEST.MF.Inside this file the data would be stored in the form of key:value pair.
+
+Scenario3:How to update one more file to the existing jar?
+D:\\AdvancedJava> jar uf demo.jar Sample3.txt
+
+
+Scenario4:How to extract complete files from the existing jar?
+D:\\AdvancedJava> jar xf demo.jar
+D:\\AdvancedJava>
+
+Note:META-INF/MANIFEST.MF 
+     Manifest-Version: 1.0
+     Created-By: 1.8.0_271 (Oracle Corporation)
+
+
+PATH VS CLASSPATH environmental Variables
+
+PATH::It is the variable used by the operating system to give support for the users to access .exe
+       .cmd,.bat file from any location of their local machine.
+       It is the variable associated with Operating System,It is no where related to Java Language.
+       To give access for all .exe,.cmd,.bat file operating system had given one inbuilt variable
+       called PATH through which user can set his .exe files which he needs to access from all
+       the locations of his local machine.
+
+Types of files which are used for execution
+1 .exe
+2 .bat
+3 .cmd
+
+Created a useredefined .bat file as shown below
+run.bat
+ date
+ time
+ ver
+
+
+D:\\AdvancedJava>run.bat
+output::success
+
+C:>run.bat
+output::Failure
+
+solution1:copy the .bat file from D:\\Advancedjava and paste it in C:>
+          C:>run
+          output::success.
+          Disadvantage:since same copy would be available in multiple drivers,unnecessaliry 
+                       memory would be wasted.
+
+Solution2:Given by the Operating sysytem in the form of Envrionmental variable
+          run.bat file is available inside D:\\AdvancedJava\\run.bat
+          This .bat file,should be used from all the drives of my local system.
+          PATH=D:\\AdvancedJava;  
+          set this PATH variable in commandprompt or through GUI panel
+          
+
+Note::When we install java,java by default would be installed inside C:\\programfiles\java
+      inside java folder we have bin which contains all .exe files which is required for the programmer
+      to run .java files
+      Since we dont save our .java files inside  C:\\programfiles\\java\bin,and we want to access
+     all the .exe files from different location of our computer,it is good practise to give the
+     information of .exe files to O.S in the form of path envrionmental variable.
+
+     GUIPanel:path:C:\\programfiles\\java\bin;<old_values>;     
