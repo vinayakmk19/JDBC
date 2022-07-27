@@ -1,0 +1,105 @@
+Static in java
+  It is called as Class level one time execution block.
+  In the application execution,JVM will load the class file only once and everytime when
+  the class file gets loaded it is the static block of the class which will be executed..
+  Inside the static block,we write a code for Intitalizing the static variables.
+  Syntax:
+     static{
+	---------logic-------
+     }
+  If we want,only one connection with respect to the database,irresepctive of the no of object
+  we create then such logic can be placed inside the static block.
+
+Constructor in Java(Dependancy Injection)
+  It is called as Object level exeuction block.
+  Jvm while creating the object,it would call the constructor through which it creates the 
+  object.
+  Inside the Constructor,we write a code for Initializing the instance variables(fields)
+  of the class.
+  Syntax:
+      <AccessModifier> className(<params>){
+		----logic----
+      }
+   If we want multiple connection with respective database,we should write that logic within
+   the constructor of the class.
+   **Constructor of the class wont be called if Clone the object or if we Desrialize the object.  
+
+Can we execute a program without writing main()?
+   Ans.Yes it possible,but depends on java version the programmer uses.
+       jdk6:Yes possible with respect to static block
+       jdk7:Not possible.
+       jdk8:Yes possible with respect to static block but the class should extend one inbuilt abstract class called
+                        javafx.application.Application.
+       jdk9,10,11....:Not possible with static block,because the javafx package has been removed from JDK9 onwards..
+
+      Refer to JDK6.java,JDK7.java,JDK8.java,JDK14.java
+
+Note:We can have multiple jvm's in single machine.
+
+How will programmer come to know which version of jdk is used to generate the .class file?
+Ans.To check the .class file version we have one java command called
+     javap -verbose classFileName.
+
+      MajorVersion                     JDK version
+        50                                 jdk6
+        51                                 jdk7
+        52                                 jdk8
+        -                                  ----
+
+Can we run our program without writing a userdefine class?
+Ans.Yes it is possible
+     JDK5:Using enum's
+     JDK7:Using interfaces
+    
+     Refer to Demo.java(enum) , Sample.java(interface)
+
+
+Note:In single java file can we write multiple classes(valid)
+     If we write multiple classes inside java file,will access modifer plays a vital role in saving the file?
+     Ans.Yes,access modifier plays a vital role,that is only one class should be made as public and the file should be saved with
+         same className.
+
+
+
+API
+   API stands for Application Programming Interface.
+   Here the word Interface should not be taken as Java Interface.
+   Here interface means english word that is standard blocks which is used for communication.
+
+Language
+ C=======>#include<stdio.h>
+   In this language API means collections of few predefined functions like printf(),scanf(),getch() available inside
+   header files.
+ Java====>import java.util.*;
+    In this language API means collection of classes,interface,enum,annoation available inside the packages.
+    In java language API will come as JAR.
+    Entire java would be given to java programmers as JARs in the form of JDk software.
+    All the commonly used classes,interfaces are available to java programmer in jdk software in the form of a jar
+    by the name rt.jar.(runtime.jar)
+    It is avaialbe in the following path:C:\Program Files (x86)\Java\jre1.8.0_271\lib\rt.jar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
