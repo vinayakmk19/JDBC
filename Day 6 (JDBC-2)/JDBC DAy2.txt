@@ -1,0 +1,75 @@
+Driver software
+   It is a software which acts a bridge b/w java application and datbase engine.
+   Every driver s/w implementation is given by dbvendors in the form of a jars
+   All the driver s/w are categorised into 4 types of drivers.
+
+Note:Every drivers/w is identified with Driver ClassName
+     To call a Class has driver class it should compulsorily implementes a Interface called
+     java.sql.Driver(I)
+     DriverManager service is what the developer uses to access the drivers/w and 
+     get the database service to his java application.
+
+FAQ.What is Drivers/w DriverClassName and Driver(I)?
+
+Type1 Driver(JDBC-ODBC Driver)
+   This is driver given by SunMicroSystem inside rt.jar only.
+   This driver to use Java pgm should take the help of Mircosoft products.
+   To use this we should install ODBC Driver(Open DataBase Connectivity) only then 
+   java can communicate with the  Oracle database.
+   Type1 Driver is a basic implementation of the driver s/w.
+   Type1 Driver is not portable because it works only with Microsoft products.
+   Type1 Driver is applicable only for standalone application,it it not prefered for
+   Enterprise Applications.
+   Type1 Driver is not prefered because multiple conversion are required to get connected
+   to database and also it reduces the performance,henceforth it is not recomened for
+   Enterprise Applications.
+
+   DriverClassName:sun.jdbc.odbc.JdbcOdbcDriver(c)
+   Interfacename:java.sql.Driver(I)
+   ServiceName:DriverManager(C)
+   jarName:rt.jar
+   Since the implementation is a basic implementation for the jdbc specificatio SUNMicrosytem
+   has removed sun.jdbc.odbc.JdbcOdbcDriver(c) the corresponding class from JDK8 onwards
+
+Type2Driver:
+    It is called Nativelibrary Driver.
+    To use this driver we are not depending on microsoft prodcuts
+    Type2 driver implmenetation is given by db vendors only
+    To use Type2 driver,we should also install native libraries associated with db
+    specifications
+    Type2 driver is also applicable only for Standalone applications
+    Type2 driver is more portable compared with Type1Driver.
+
+   Problems:
+     Type2Driver complete implementation is not given in C.Due to which it reduces
+     performance of Java application
+
+Type3 Driver:
+    It is also called MiddleWare Networkprotocol driver.
+    This driver implementation is purely coded in java
+    Using this driver multiple java application can interact with db simultaneously.
+    This driver is suitable only for Enterprise Application not for stand alone applications
+
+  Problems:
+    It is applicable only for enterprise applciations not for standalone
+    Maintanice of server is important otherwise application performance will be degraded.
+    Configuring middelware services is also bit tricky.
+
+
+Type4 Driver:
+    It is called as thin driver.
+    This driver is purely built using java.
+    This driver is best suited for standalone application as well as enterprise applications
+    This driver s/w will be given by db vendors for free of cost.
+    This driver s/w can be used with in same system where we have db s/w as well as java pgm
+    This driver s/w can also be used when we have db in one system and java programming
+     running in another s/m.
+
+Note:Type1<Type2<Type3<Type4
+          Type4 Driver is best because of various factors like
+             1.Coded completely in java
+             2.Free of cost
+             3.Implementation is given by dbVenodrs only because dbVendors 
+               knows the architecure of their own databases.
+
+   

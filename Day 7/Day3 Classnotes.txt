@@ -1,0 +1,218 @@
+JDBC Applications
+ Sun/Oracle had given few steps for a java pgm to communicate with the database.
+
+1.Load and register the driver to java application
+2.** Establish the Connection(I) to the database(DB--->table) through Connection(I) object.
+3.Create the Statement(I) Object,PreparedStatement(I) Object or CallableStatement(I) Object.
+4.Create a SqlQuery(As per the programmer needs)
+5.Execute the Query
+6.Perform Retrival operation through ResultSet(I) Object.
+7.Close the resources(Connection,Statement,ResultSet) Objects.
+
+
+Type1Driver Pgm
+DriverClassName:sun.jdbc.odbc.JdbcOdbcDriver(given by SUN)
+DriverInterface:java.sql.Driver
+Helper Class:DriverManager
+jar:rt.jar(given by SUN)
+software:jdk7(32bit),Oracle(32bit),ODBC product of Microsoft.
+
+Configuring the ODBC Product
+1.Open control panel
+2.Search for administrative tools
+3.Check for ODBCDriver(32bit)
+4.Double click on ODBCDriver and search for MicrosoftODBC for Oracle
+5.Provide datasource name as per ur needs(eg:abc)
+6.click on ok and clik on apply and close.
+
+
+Steps followed to write jdbcApplication
+1.Load and register the driver
+     It refers to process of registering the driverClassName with our java application.
+     To load and register the driver,we take the help of DriverManager(C) Service.    
+     
+package java.sql;
+public interface Driver{
+	------
+        ------
+
+}
+public class DriverManager{
+	private DriverManager(){
+
+        }
+        public static void registerDriver(Driver driver) throws SQLException{
+             ----logic to register the driver------
+        }
+	public static getConnection(String url,String username,String password) throws SQLException{
+
+        }
+
+}
+
+Note:3 important points of method parameter
+    1.If the method parameter is of type Interface,we can pass any of the implementation class object as the
+      argument.
+    2.If the method parameter is of type abstract class,we should be pass the implmeation class object of
+      the abstract class as the argument.
+    3.If the method parameter is of type concrete class,then we can pass concrete class object as the argument
+      or its subclass object can be passed(provided concrete class should be parent)
+
+
+   eg:
+     import java.sql.DriverManger;
+     import sun.jdbc.odbc.JdbcOdbcDriver;
+     import java.sql.SQLException; 
+     public class MainApp{
+		public static void main(String ...args) {
+                   try{
+                        JdbcOdbcDriver driver=new JdbcOdbcDriver();
+			DriverManager.registerDriver(driver);
+                   }catch(SQLException sqlException){
+			System.out.println(SQLException.getMessage());
+                   }
+                }
+      }
+
+Note:Loading the driver can also be done with the help of static method avaialbe inside java.lang package
+
+     packag java.lang;
+     public class Class{
+	public static Class forName(String class) throws ClassNotFoundException{
+			---logic of loading the class-----
+        }
+     }
+
+   package sun.jdbc.odbc;
+   public class JdbcOdbcDriver{
+	static{
+		try{
+                        JdbcOdbcDriver driver=new JdbcOdbcDriver();
+			DriverManager.registerDriver(driver);
+                  }catch(SQLException sqlException){
+			System.out.println(SQLException.getMessage());
+                 }
+        }
+
+   }
+
+Note:OracleDriver implemenation details will never be disclosed to the outside world.
+     MysqlDriver implementation details can be seen by connecting to its .sources.
+
+
+Step2:Establishing the connection
+
+package java.sql;
+public interface Connection{
+	------
+        ------
+
+}
+public class DriverManager{
+	private DriverManager(){
+
+        }
+        public static void registerDriver(Driver driver) throws SQLException{
+             ----logic to register the driver------
+        }
+	public static Connection getConnection(String url,String username,String password) throws SQLException{
+                ------
+                ------
+                Connection connection=new ConnectionImpl();
+                return connection;
+
+        }
+
+}
+
+                                          OracleDriver
+package sun.jdbc.odbc;
+public class JdbcOdbcDriverImpl implements Connection{
+
+}
+
+	                                  MysqlDriver
+package com.mysql.cj.jdbc
+public class ConnectionImpl implements Connection{
+
+
+}
+
+                                           Sybase
+
+package com.sybase.cj.jdbc
+public class ConnectionImpl implements Connection{
+
+
+}
+
+Note:For Type1 Driver url will be in the following format
+                url::protocolName:subprotocol:dataSourceName
+                user::dbUsername
+                password:dbPassword
+
+            eg:url::jdbc:odbc:abc
+               user::system
+               password:root123
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

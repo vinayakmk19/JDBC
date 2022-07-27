@@ -1,0 +1,69 @@
+SUN/Oracle had give the following steps to make java to connect with database
+
+1.Loading and register the driver(optional from JDBC4.0 because of Autoloading)
+2.Establish the connection with the database using Connection(I) Object
+3.Create the Statement(I) or PreparedStatement(I) or CallableStatement(I) Object
+4.Execute the query and retrieve the result based on Query(ResultSet(I) Object)
+5.Close the resource(Statement,ResultSet,Connection Objects)
+
+Using Type4 Driver(Given by DBVendor)
+DriverClassName:com.mysql.jdbc.Driver(C) or com.mysql.cj.jdbc.Driver(C) 
+Driver s/w:Mysql-connector-java-XXXX.jar
+Driver(I):java.sql.Driver(SUN)
+
+Steps followed to add external jars as a classpath to our project
+1.Right click on the project
+2.Go to build path and click on configure build path
+3.In the opened window click on AddLibrary
+4.In the opened window select userlibrary and click on next option
+5.In the opened window click on user librarires
+6.In the opened window click on new option
+    Give the name as mysqlib and click on ok button
+7.After doing step6 properly click on Addjars
+8.Go to the following path which contains the mysql jar and give the path to it
+          C:\Program Files (x86)\MySQL\Connector J 8.0\.........jar
+    note:If the jar is not available,then download from the internet and follow
+         the same steps.
+9.Click on finish and click on apply and close to set up mysqlib to our project.
+
+
+Steps followed to download mysql driver from internet
+1.Open the browser of ur choice(chrome,safari,mozilla...)
+2.Type as Mysql
+3.click on the first link to redirect to MysqlWebsite
+4.Scroll down and click on MysqlCommunity Downloads link
+5.Click on Connector/J link to get javalanguage specific driver.
+6.In the select operation system drop down click on platform independent tab
+7.Select second option((mysql-connector-java-8.0.22.zip) click on download
+8.Click on Nothanks,start download
+9.Jar will be downloaded to our local system(C:/user/downloads)
+10.Unzip the downloaded file to see the .jar file on mysql driver.
+
+Note:As a java programmer,should i remeber driverClassName to identify drivers/w
+     for all the databases available in the market?
+  Ans.In earlier version of JDBC till JDBC3.0,programmer should remember the class
+      Name for loading the driver.But from JDBC4.0 onwards we need not rember
+      the className for loading because JDBC4.0 introduced Autoloading feature.
+
+What is Autoloading Feature of JDBC4.0?
+Ans.In JDBC4.0,as a javaprogrammer we need not load the driverClass,but JVM would
+    internally load the ClassFile of the driver by taking the help of url specified
+    by the programmer.
+     url:jdbc:mysql://localhost:3306/abc
+   Depending on the url jvm would go to classpath setting of the project and 
+   searches for the releveant jar file.(mysql-connector-java-8.0.222 jar)
+   Inside this jar it will go to META-INF/services folder.Inside this folder
+   we have a file called java.sql.Driver
+       Inside this file we have a class which will be picked by JVM and loads 
+   the class internally using Class.forName().
+ 
+   
+
+
+
+
+
+
+
+
+

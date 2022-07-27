@@ -1,0 +1,133 @@
+ Technology
+    It is a specification which gives bunch of rules(interface,abstractclass)
+and guideliness(concrete class) in the form of an api to develop an implementation
+software through one or the other programming language.
+     eg: JDBC Technology
+         SUN/Oracle specificiation is only JDBC API(java.sql.* and javax.sql.*)
+            
+         SERVLET Technology
+            SUN/Oracle specificiation is only SERVLET API(javax.servlet.*)
+
+
+Classification of Technologies
+  1.Open technology
+  2.Propritieatary Technology
+
+OpenTechnology
+    In this technology,rules and guideliness are open to all s/w vendors to implement
+    the required s/w.
+      eg:JDBC,Servlets,JSP,JavaMail,JAAS,......
+
+Propritieatary Technology
+     In this technology, rules and guideliness are not open to all s/w vendors to implement
+     the required s/w.
+       eg:ASP.net,WEBSERVER,......
+
+JDBC 
+  JDBC is a open technology given by sun/Oracle in the form of api(rt.jar) to build the neccessary driver 
+  s/w to interact with the database.
+
+Terminlogies associated with JDBC
+1.Persistence
+2.Persistence Store
+3.Persistence Data
+4.Peristence Operation
+5.Persistence Logic
+6.Persistence technology/Framework
+
+
+Persistence:It is the process of storing and managing the data for a long time is called Persistence.
+            To achieve Persistencey we use files,DBS/w,etc...
+ 
+Why we need persistence?
+   In java language,we store the data in the form of objects,arrays,variables... but if we store the data
+   inside this variables,objects,arrays it would be on the heap memory(jvm) only till jvm executes the program
+   once jvm finishes its execution memory for those variables,objects,arrays would be vanished.To store
+   the data permanently we need persistency.
+
+
+PersistenceStore:The place/software where the data is stored and managed for a long time is called
+                  Persistence store
+                  eg:files,DBS/w(database--->table---->record)
+
+
+PersistenceData:The data of PersistenceSore is called Persistence data.
+                  eg:File data,DBS/w data(records)
+
+PersistenceOperation:Insert,Select,Update,Delete operations are performed on Persistence Data we called its
+                       as persistence operations.
+
+                      Create(Insert)
+                      Read(Select)
+                      Update(Update)
+                      Delete(Delete)
+                     In short developers alwasy perform CRUD operations on PersistenceData.
+
+PersistenceLogic:The logic which is written to perform Peristence operation is called Persistence Logic
+                   eg:jdbccode,hiberantecode,springjdbccode,springhibernatecode......
+
+PersistencTechnology:The technology which is used to develop a persistence logic is called Persistence 
+                      technology.
+                   eg:JDBC(technology),Hibernate(tool),SpringJDBC(framework),SpringORM(framework)
+                      SpringDatajpa(Framework--->springboot)
+
+
+Note::We use PersitenceTechnology to write persistence logic to perform persistence operation on peristence
+      data avialable in peristence store.
+
+
+
+How to achieve persistency in javalangauge
+Ans. Language:Through java.io packages we can achieve persistency.........
+     Technology:Through jdbc api(rt.jar) as java.sql.* and javax.sql.* packages we can achieve persistency.
+
+              java.sql(corepackage)                         
+  classes(guidelines)    interfaces(rules)
+  DriverManager           Driver
+  Types                   Connection
+  Date                    Statement
+  TimeStamp               PreparedStatement
+   ---                    CallableStatement
+   ---                     -----
+
+               javax.sql(extendedpackages)
+     classes(guidelines)            interfaces(rules)
+       StatementEvent                RowSet                      
+       ConnectionEvent               DataSource
+       RowSetEvent                   PooledConnection
+        ----                          -----
+
+
+ Note:Programmer/developer is not responsible for giving implementation for the interfaces avaialble inside
+      java.sql.* or javax.sql.* packages.Third party vendors will give the implementation s/w to the 
+      developers in the form of jars which we call it as Drivers/w.
+
+What is jdbc driver s/w?
+    It acts as a bridge b/w java application and database s/w.
+    It refers to collection of classe,interface given by third party vendor by implmenting the specification
+    given by SUN/Oracle.
+    These driver s/w would be given to the devleopers in the form of .jar so that he can use in java application  to perform persitence operation.
+
+      SUN/Oracle
+          100classes
+          100interfaces
+        only specification(rt.jar)
+
+vendor1
+    Oracle
+         we give implementaion to specification given by SUN/oracle
+         oracle will give the implement s/w in the form of ojdc.jar
+
+
+vendor2
+    Mysql
+          we give implementaion to specification given by SUN/oracle
+          mysql will give the implemented s/w in the form of mysql.jar
+
+vendor3
+    Postgress SQL
+          we give implementaion to specification given by SUN/oracle
+          PostgressSql will give the implemented s/w in the form of postgressSql.jar
+
+Note:Since devlopers write the code using jdbcapi,not with respect to driver s/w easily we can achieve
+     loose coupling.

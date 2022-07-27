@@ -1,0 +1,141 @@
+Key points about environmental variables
+1.Envrionmental variables are not case sensitive
+      eg:PATH,path,CLASSPATH,classpath
+2.Any new updations to the envrionmental variables would be prefered in the 
+   begining only
+       eg:path=<new_entry>;<old_value>;
+       eg:path=c:programfiles\jdk15\bin;c:programfiles\jdk8\bin;
+3.multiple values can be added to environmental variables with the help of
+   ; symbol.
+4. "." in the environmental sugges the current location.
+
+Keypoints about jar files
+Jar files in java can be used in mulitple angles
+1.Entire java language is avialable as a jar
+           till jdk8:rt.jar
+2.jar would be also be avaialbe in the form of driver s/w.
+       driver:It is used to convert all our java api calls(method) to db engine 
+             specific calls(insert,update,delete,select).
+
+3.jar would be available as direct executable file for standalone projects.
+        eg:<lombok-api>.jar
+
+4.There is one more flavour of jar called as war(web application archieve)
+        It is used to deploy/host webapplications which are built using java
+         eg:www.facebook.com
+
+5.jar file would also be available as EJB components.
+
+
+How to load the .class file dynamically by the JVM without creating the object
+  of the loaded class?
+Solution:To load the .class dynamically we need to use inbuilt class called 
+         "java.lang.Class".
+
+ package java.lang;
+ public class Class{
+	public static Class forName(String className) throws java.lang.ClassNotFoundException{
+				-----logic-----
+        }
+ }
+
+Behind the scenes::jvm while executing the program will pick the className which is been passed as the parameter,
+                   it will search for the .class file in bootstrap classloader,extension classLoader and in
+                   Application class Loader.
+                   If the class is available,it would load the class on to jvm memory(methodarea)
+                   If the class is not available,it would result in java.lang.ClassNotFoundException.
+
+TestApp.java
+class Test{
+	static{
+		System.out.println("staticblock::TestClass");
+	}
+	Test(){
+		System.out.println("ZeroParam-Constructor::TestClass");
+        }
+}
+class Demo{
+	static{
+	      System.out.println("staticblock::DemoClass");
+	}
+	Demo(){
+           System.out.println("ZeroParam-Constructor::DemoClass");
+        }
+}
+public class TestApp{
+        static{
+	      System.out.println("staticblock::TestAppClass");
+	}
+	public static void main(String ...args)throws ClassNotFoundException{
+              Demo d1=new Demo();
+              Demo d2=new Demo();
+
+	      Class.forName("Test");
+
+ 	      
+        }
+}
+
+
+
+Scenarios where jvm would load the class files for execution
+1.when we give a java code which contains main method class for the exectuion,if the main method code contains
+  static block,even that static block gets executed
+        D:\\AdvancedJava>java TestApp
+         output:staticblock::TestAppClass
+2.When JVM tries to create the object mutiltple times in java application,it would load the .class file only once
+   as a result of which the static block of the .class file will be loaded only once.
+   D:\AdvancedJava>java TestApp
+   staticblock::TestAppClass
+   staticblock::DemoClass 
+   ZeroParam-Constructor::DemoClass
+   ZeroParam-Constructor::DemoClass
+3.Using class.forName also we can load the .class file dynamically.
+   D:\AdvancedJava>java TestApp
+   staticblock::TestAppClass
+   staticblock::DemoClass 
+   ZeroParam-Constructor::DemoClass
+   ZeroParam-Constructor::DemoClass
+   staticblock::TestClass
+4.When we call static methods on any java class,automatically .clas file will be loaded and it static block
+  exists for the loaded class even that also would be executed.
+     eg:String.valueOf(9);
+5.When we write the method in the method parameter if the parameter type is of either
+   class,abstract,enum,interface,annotation even then .class file will be loaded and
+   its static block will be executed.
+     eg:  public void displayName(String name){
+              ---logic---
+	  }
+6.By default while loading the .class file its parent class files also jvm would load as result of
+   which the static block of all those classes also would be executed.
+    
+     class A{}
+     class B extends A{}
+     class C extends B{}
+   
+   jvm will load the .class file in the following manner for the following line
+     C c=new C();
+        C.class,B.class,A.class,Object.class file will be loaded on JVM memory and executes in LIFO manner.
+
+
+What is difference b/w language and Technology?
+Language:It is directly an installable s/w which acts a raw material by providing the basic feature that are required
+         for applciation Development.
+         It defines rules(syntax) and structures(semantics) of the programming language by suppling compiler
+         and interprter.
+
+Technology:It is a software specification that gives bunch of rules and guidliness in the form of an api to develop
+            an implementation s/w by using one or more programming language.
+           eg::JDBC API(SUN/ORACLE)
+               DataBaseName:Mysql(mysql-connector.jar),Oracle(ocjdb.jar),PostgressSQL(***.jar)
+           Technology is not a installable s/w,Technology related s/w components are either installable or
+           arrangable(keeping jars)
+
+           Working with s/w components means,we are working with technology it means if we work with mysql-connector.jar
+           or ojdbc.jar.
+
+How to get the api or jar from Database vendor?
+  ans.To get the api or jar from Database vendor we have 2 options
+       1.Internet
+       2.When we install database s/w in the local machin the db vendors would give the jar for free of cost.
+           jarpath:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.22.jar
