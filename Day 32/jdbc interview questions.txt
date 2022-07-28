@@ -1,0 +1,71 @@
+
+1.what is the difference between Database and database management system?
+
+2.How a query could be executed when we send a query to Database?
+
+3.what is Driver? how many driver are available in JDBC? what are the types?
+
+4.what is JDBC and what are the steps to write a JDBC application?
+
+5.How to load the JDBC Driver?
+
+6.How to establlish data base connection between java application and database?
+
+7.Basically Connection is an interface,how getConnection() will create an Object for Connection interface?
+
+8. What is the requirement to use the statement Object?
+
+9. how to execute SQL Queries from a java Apllication?
+
+10. what is the diffrence between executeQuery(...), executeUpdate(...) and execute(...) methods?
+
+11.How to create a table dynamically from a jdbc application?
+
+12.How to insert records into a table from a JDBC application? 
+
+13.How to update a table from JDBC Application?
+
+14.How to delete records from a table from jdbc Application?
+
+15.what is ment by ResultSet Object and how to fetch the data from Database?
+
+16.In General execute() method can be used to execute selection group SQL queries for getting the data from Database, but execute() return
+    a boolean value true so here how it is possible to fetch the data from the database?
+
+17.In general execute() method can be used used to execute Updatation SQL queries for updating the data on database, but execute() return 
+   a boolean value false so here how it possible to get the records updated count value(int value)?
+
+18.If we use selection group SQL Query to executeUpdate(), what happened?
+
+19.If we use Updatation group SQL Query to executeQuery() , what happended?
+
+20.What is meant  by resultSet and what are the types of resultSets are available in jdbc application?
+
+21.What is difference between scrollSensitive resultSet and scrollInSenstive resultSet?
+
+22.What is the default ResultSet type in JDBC application and how it is possible to create a specific type of ResultSet object?
+
+23.How to iterate the data from Scrollable ResultSet object in both forward and backword direction?
+
+24.How to ScrollSensitive ResultSet and how to reflect the later updations from database automatically to the ResultSet object?
+
+25.How to insert into database throws Updatable ResultSet?
+
+26.How to perform updations on database throws Updation  ResultSet?
+
+27.What is meant by ResultSet metaData? how to get the ResultSet metaData of a resultSet Object?
+
+28.How to display the data with respective field names?
+
+29.What are the difference between Statement and prepared statement? or tell me the situations where we should go for preparedStatement 
+   over Statement object.
+
+30.How to insert number of records into a table through prepared statement object.
+
+31.How to update database  through preparedStatement object?
+
+32.How to fetch the data from database through preparedStatement object?
+
+33.What is meant by transaction? how it is possible to maintain transaction in JDBC application?
+
+34.What is meant by savePoint ? how to use SavePoint in JDBC application?

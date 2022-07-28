@@ -1,0 +1,136 @@
+ResultSet
+   By default ResultSet object we get would have the following nature
+   1.Type::TYPE_FORWARD_ONLY
+   2.ConcurrencyMode::CONCURR_READ_ONLY
+
+Type::indicates what type of Traversal we do with the Object
+Mode::indicates what type of opeations we do on the Object.
+
+We can change the ResultSet Object behaviour to any type,and to any mode using the 
+following Syntax:
+  
+    Statement statement=Connection.createStatement(int type,int concurrency);
+    connection.prepareStatement(String sql, int resultSetType,int resultSetConcurrency)
+
+To make ResultSet Object as Forward and ReadOnly we use
+   Statement statement=Connection.createStatement(ResultSet.TYPE_FORWARD_ONLY,
+                                                  ReulstSet.CONCURR_READ_ONLY);
+
+To make ResultSet object as Scrollable and ReadOnly we use
+   Statement statement=Connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                                  ResultSet.CONCURR_READ_ONLY);
+
+To make ResultSet object as Scrollable and Updatable we use
+   Statement statement=Connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                                                  ResultSet.CONCURR_UPDATABLE);
+
+
+
+
+Difference b/w Sensitive ResultSet and InSensitiveResultSet through Updatable operation?
+
+InSensitiveResultSet:
+      Statement statement=Connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                                  ResultSet.CONCURR_UPDATABLE);
+
+Since it is insensitive,any changes made on the table would not be reflected to resultSet Object
+
+SensitiveResultSet:
+      Statement statement=Connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                                                  ResultSet.CONCURR_UPDATABLE);
+Since it is sensitive,any changes made on the table would be reflected to resultSet Object.
+
+
+
+Differnce b/w Updatable ResultSet and ReadOnly ResultSet
+  UpdatableResultSet: Using this resultSet we can perform CRUD operation,meaning insert,update and delete query
+                      can be written without writing sql query,it can be done directly on ResultSet Object
+
+         Statement statement=Connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                                  ResultSet.CONCURR_UPDATABLE);
+
+  ReadOnlyResultSet:Using this resultSet we can perform only Read Operation,other NonSelect Operations are not
+                      possible.
+           
+         Statement statement=Connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                                                  ResultSet.CONCUR_READ_ONLY);
+
+
+
+EG::UpdatableResult with Sensitive Feature of ResultSet Object.
+    Whenever we make the ResultSet object for Updation we always communicate about the queries only through
+    its columns.
+
+    eg::select * from student;  //Not permitted
+        select SID,SNAME,SAGE,SADDRESS from student;// valid
+
+Note::To get the Updated Record through offline mode from the java application , we use
+         resultSet.refresh();
+      To take the cursor to the firstRow(table column names) from any position in the reusltSet object we use
+         resultSet.beforeFirst();
+
+
+
+Note::
+DB support for Creating ResultSetObject type::
+     
+Oracle:: Scrollable,Updatable,Readonly=>all combinations are supported
+Mysql:: Scrollable(TYPE_SCROLL_SENSITIVE) and CONCUR_UPDATABLE this combination doesnot support whereas 
+        other combinations woudl support
+
+
+
+PostgreSQL
+   By default in PostgreSQl, we have GUI called pgadmin4 through we can create the tables and insert the records.
+  
+  username:postgres
+  password:root123
+  port:5432
+
+
+   DriverClassName::org.postgresql.Driver(loading happens automatically in JDBC4.X version)
+   JDBCURL::jdbc:postgresql://localhost:5432/databaseName  or jdbc:postgresql:///databaseName 
+                                                           or jdbc:postgresql:databaseName                               JDBCUsername::postgres
+   JDBCPassword::root123
+   
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+      
+
+
+
+
+
+
+
+
+      
+
+
+
+
+
+
+
+
+   
+
+   

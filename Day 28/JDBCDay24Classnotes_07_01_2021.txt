@@ -1,0 +1,58 @@
+JdbcRowSet
+  It is same as ResultSet Object
+  It is by default Scrollable and Updatable
+  It is not Serializable.
+  It is child interface for javax.sql.RowSet.
+  It is a ConnectedRowSet Object,meaning we should always have connection with database
+  to perform our persistence Operation.(No offline datamanipulation support is available)
+
+  EG:: 
+       ResultSet resultSet=connection.createStatement()//Not Scrollable and Updatable
+       ResultSet resultSet=connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                                                      ResultSet.CONCUR_UPDATABLE);
+
+       JdbcRowSet jdbcRowSet=factory.createJdbcRowSet();//Scrollable and Updtable by default
+
+refer::JdbcRowSetApp
+
+
+CachedRowSet(I)
+  It is DisconnectedRowSet Object,it support offline datamanipulation through CachedRowSet
+  and the changes would reflect back to database we get back the connection Object.
+  It is Child interface for javax.sql.RowSet
+  It is default Scrollable and Updatable.
+
+Note:Any changes made in CachedRowSet object will not be reflecte to DB table automatically 
+     because those changes will happen in offlinemode,to make the reflection to happen
+     in DB we use acceptChanges().
+
+refer::CachedRowSetApp
+
+
+WebRowSet(I)
+============
+    This Object is mainly used to tranfer the data from one application to another application
+    When the communication happens from one application to another applciation,the data tranfered
+    should always be made as Independatable.
+
+     We always send the data from one application to another application through XML
+XML:: it stands for Extensible MarkUp language,it is the format which is used to send the data
+      from one applciation to another application.
+
+
+POSTGRESQL installation link for windows
+  https://www.postgresqltutorial.com/install-postgresql/
+
+POSTGRESQL installation link for linux    
+ https://www.postgresqltutorial.com/install-postgresql-linux/
+
+
+
+
+
+
+
+
+
+   
+   

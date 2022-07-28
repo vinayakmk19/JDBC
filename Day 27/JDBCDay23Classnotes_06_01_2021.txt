@@ -1,0 +1,96 @@
+PostgreSQL
+ portNo:5432
+ username:postgres
+ password:root123
+
+DriverClassName::org.postgresql.Driver(loading happens automatically in JDBC4.X version)
+   JDBCURL::jdbc:postgresql://localhost:5432/databaseName  or jdbc:postgresql:///databaseName 
+                                                           or jdbc:postgresql:databaseName            JDBCUsername::postgres
+   JDBCPassword::root123
+
+
+DataTypes
+==========
+Nubmer:Integer,real
+String:CHARACTER VARYING(n)
+
+To check for the datatype refer to the following
+   https://www.postgresqltutorial.com/postgresql-data-types/
+
+PostgreSQl supports Sequences for Autogenartion of PrimaryKey
+    sequnce->rightclick->createsequence->sequenceName->Go to defnition->insert the desired value and click on save
+    sequence would be created
+
+
+Assignment:
+     Use PostgreSQL only
+    Complete CRUD operation through Statement approach
+    Complete CRUD operation through PreparedStatement approach
+
+
+
+RowSet
+   This object is same as ResultSet Object with extra feature with in it.
+   It can hold large bunch of result w.r.t to Select SQL Query.
+   It is avilable inside the package called javax.sql.RowSet(I)
+   
+Limitation of ResultSet
+   1.It is not a Serializable Object,so it cannot be transferred over the network
+   2.It does not support Bean Style Programming(setter and getter)
+   3.It does not support eventhandling[notification about the usage of resultSet object is not sent to the user]
+   4.***We cannot make the changes to happen in the database in offline mode without connection object,because
+         ResultSet object is technically termed as Connected Object only.
+
+Advantages of RowSet
+   1.All the basic functionalities of ResultSet is available for RowSet
+   2.It is a Seriabliazle Object,so it can be transferred over the network
+   3.It Supports Beans Style Programming
+   4.It Supports Event Handling
+   5.** we can make the changes to happen in the database in offline mode witout connection object,
+       once the connection object is back the changes would reflect automatically in database.
+
+
+In JDBC there are 5 types of RowSet avaialable
+  1.JdbcRowSet[connectedRowSet object]
+=========================================
+      DisconnectedRowSet Object
+     =======================
+  1.**CachedRowSet
+  2.WebRowSet
+  3.JoinRowSet
+  4.FilteredRowSet
+
+
+RowSet 
+   By default RowSet Object is Scrollable and Updatable.
+   JdbcRowSet object is ConnectedObject,this is give to just work like ResultSet Object only.
+   It is not Serializable Object
+   Since it is ConnectedObject,offline data manipulation is not possible.
+
+refer JDBCRowSetApp 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

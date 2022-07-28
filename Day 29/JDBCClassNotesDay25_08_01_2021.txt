@@ -1,0 +1,131 @@
+WebRowSet(I)
+============
+    This Object is mainly used to tranfer the data from one application to another application
+    When the communication happens from one application to another applciation,the data tranfered
+    should always be made as Independatable.
+
+    We always send the data from one application to another application through XML
+XML:: it stands for Extensible MarkUp language,it is the format which is used to send the data
+      from one applciation to another application.
+
+   It is child interface of CachedRowSet
+   This object is used for sending the data to the other applications in the form of XML
+   Be default it is Scrollable and Updatable.
+   It is also disconnected Object.
+   We use WebRowSet object to get the data in the form of xml so that it can be used in 
+   various layers of Enterprise Application.
+
+To perform insertion operation through WebRowSet we use the following mechanism
+  1.Create the xml file and name it as ****.xml
+  2.<data>
+	<insertRow>
+		<columnValue>21</columnValue>
+		<columnValue>ABD</columnValue>
+		<columnValue>37</columnValue>
+		<columnValue>RCB</columnValue>
+	</insertRow>
+
+    </data>
+
+UpdateRow
+=========
+<data>
+	<currentRow>
+		<columnValue>21</columnValue>
+		<columnValue>ABD</columnValue>
+		<columnValue>37</columnValue>
+                <updateValue>39</UpdateValue>======>Age gets upated to 39
+		<columnValue>RCB</columnValue>
+	</currentRow>
+</data>
+
+DeleteRow
+========
+<data>
+	<deleteRow>
+		<columnValue>21</columnValue>
+		<columnValue>ABD</columnValue>
+		<columnValue>37</columnValue>
+		<columnValue>RCB</columnValue>
+	</deleteRow>
+</data>
+
+JoinRowSet
+==========
+   It is the child interface of WebRowSet
+   Using JoinRowSet,we join multiple rowSet into One RowSet Object.
+   To join two RowSet Objects we need a common column in the tables used for Joins.
+   By default they are Scrollable and Updatable.
+ 
+Steps followed to work with JoinRowSet Object
+===============================================  
+   1.Create two RowSet Objects as per the needs.
+   2.Before executing the command,set the common colIndex and execute
+          jdbcRowSet.setMatchColumn(String colName)
+   3.Create JoinRowSet Object
+   4.Add the result of RowSet Object to JoinRowSet(which internally joins two tables based on
+                                                    matched column)
+         joinRowSet.addRowSet(RowSet Object1)
+         joinRowSet.addRowSet(RowSet Object2)...
+   5.Use JoinRowSet object to access the result of Join.
+
+refer:: JoinRowSetApp
+
+
+FilteredRowSet(I)
+   eg: String sqlSelectQuery="select sid,sname,sage,saddress from student where sid=10";
+       String sqlSelectQuery="select sid,sname,sage,saddress from student";
+
+ In order to filter the records based on some java conditions we use filteredRowSet,in the query
+we only write select command.
+ ** To provide the filter condition we use an interface called Predicate.      package:javax.sql.rowSet.Predicate
+
+     interface Predicate{
+
+             //This method will be called automatically when we call next()
+             public boolean evaluate(RowSet rowSet);
+
+             //This method will be called automatically when we perform insert,update,delete
+                  operation on table through colIndex through rowSet object
+             public boolean evaluate(Object object,int colIndex);
+
+            //This method will be called automatically when we perform insert,update,delete
+                  operation on table through colNames through rowSet object
+             public boolean evaluate(Object object,String colName);
+     
+     }
+    
+   controlflow
+      When we call filteredRowSet.next(),it internally calls evaluate(RowSet rowSet)
+      inside evaluate(RowSet rowSet) we writer boolean logic to check for the condition.
+      using rowSet object we access the value from the database using the method
+              rowSet.getString(colName)
+
+refer::FilterRowSetApp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+   

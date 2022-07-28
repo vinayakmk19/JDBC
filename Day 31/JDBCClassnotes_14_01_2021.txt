@@ -1,0 +1,95 @@
+ConnectionPooling
+=================
+package javax.sql;
+interface DataSource{
+	-------
+}
+class MySqlDataSource implements DataSource{
+
+
+}
+DataSource dataSource=new MysqlDataSource();//loose coupling
+
+Every connection Object available inside the Connection pool represents the
+object of DataSource(I)
+
+HikariCP
+========
+To use HikariCp connection pooling in our jdbc application,we need to take the help of 
+Connection pooling program of HikariCP(it is available through .jar)
+
+associated jars
+  1.Hikaricp
+  2.sl4j-simple-api.jar
+  3.sl4j-api.jar
+
+To work with HikariCp we use the following approach
+===================================================
+First create the hikariConfig object
+    HikariConfig config=new HikariConfig();
+
+Set the jdbcParameters using setter methods
+        config.setJdbcUrl("jdbc:mysql:///abc");
+        config.setUsername("root");
+	config.setPassword("root123");
+
+Create the DataSource Object by setting in the configuration information
+     HikariDataSource hkDataSource=new HikariDataSource(config);
+
+To get the connection we use
+      Connection connection=hkDataSource.getConnection();
+
+
+In case of Frameworks like SpringJDBC,SpringORM these configuratio details are
+provided in 2 ways
+1.Through XML approach.
+2.Through annotations.
+
+In SprinBoot approach,this connection pooling apporach is taken from the user because it gives
+the support internally. only jdbc infromation will be give through properties file as show below
+   application.properties
+      spring.datasource.url=jdbc:mysql:///abc
+      spring.datasource.username=root
+      spring.datasource.password=root123
+
+   application.yaml
+        spring
+              datasource
+                      url: jdbc:mysql:///abc
+                      username:root
+                      password:root123
+
+
+Server Provided Connection Pooling
+==================================
+This will be used in majority of the Enterprise application,to provide good response to the 
+clients.
+Server Provided Connection Pooling used a technique of JNDI(Java Naming Directory Interface)
+Best Supported Server is WebLogic Server(an Application Server)
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+

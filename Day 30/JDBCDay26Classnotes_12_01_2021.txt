@@ -1,0 +1,94 @@
+Event Handling in JDBC
+======================
+Every Event in java represent a Class
+For every Event to perfrom an action we need listeners(methods),and Actions in java always represents an Interface.
+
+package javax.sql.RowSetListener
+
+interface RowSetListener
+{
+        //This method gets called automatically when rowSet Object data is used
+        void rowSetChanged(RowSetEvent event);
+
+        //This method gets called automatically when row data is changed 
+	void rowChanged(RowSetEvent event);
+        
+        //This methods gets called automatically when cursor moves from one row to another row
+        void cursorMoved(RowSetEvent event);
+
+}
+
+
+Note::In order to set the listener to any RowSet object we use the following approach
+         rowSetObject.addRowSetListener(RowSetListener listener)
+
+      Set the rowSet Listener before a call to execute().
+
+
+ConnectionPooling
+=================
+In case of webapplications,creating the connection object and destroying the connection is an
+expensive activity,To resolve this problem normally in a webapplication we create a pool of 
+connection object always read for use before the client uses the application.
+
+Connection Pooling can be achieved in 3 ways
+1.using BasicConnectionPooling given by DB vendor
+2.Using third party api's
+3.Server Provided ConnectionPooling mechanisms
+
+
+ConnectionPooling by DBVendors
+
+1.To bring ConnectionPooling in JDBC application in JDBCapi we have an interface called
+     interface DataSource{
+	public void setURL(url);
+        public void setUser(user);
+        public void setPassword(password);
+	public Connection getConnection();
+
+     }
+
+2.DB vendor will give the implementation for this Interface called DataSource.
+3.MysqlVendor implementation class is MysqlDataSource.
+4.OracleVendor implementation class is OracleDataSource.
+5.PostgreSQL vendor implementation class is PGSimpleDataSource.
+6.By default all the implementation classes would give 4 Connection objects inside the Connection
+  Pool which gets created by the programmer.
+
+refer::BasicConnectionPooling
+
+
+To increase no of Connection Objects in the ConnectionPool,always prefer either server provided
+or thirdparty api's provided ConnectionPooling pgms(api's or jars)
+
+ThirdParty apis
+================
+1.ApacheDBCP
+2.c3po
+3.proxol
+4.vibur
+5.HikariCp[SpringBoot internally give this api for free of cost]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
