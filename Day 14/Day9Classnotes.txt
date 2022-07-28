@@ -1,0 +1,110 @@
+What is difference b/w Statement(I) vs PreparedStatement(I)?
+
+Statement::It does not hold Pre-Compiled Query.
+PreparedStatement:: It hold Pre-Compiled Query.
+
+Statement::It doesnot have placeholder(?) as params.
+PreparedStatement::It has placeholder(?) as params.
+
+Statement::Conversion should be done by the programmer as required by SQLQuery
+PreparedStatement::Conversion would be done by setXXX() automatically.
+
+Statement::One statement object can be used to execute mutilple queries one by one.
+                  eg:Statement stmt1=connection.createStatement();
+                     stmt1.executeQuery(sqlSelectQuery);
+                     stmt2.executeUpdate(sqlInsertQuery);
+PrepareStatement::one preparedStatement can be used to execute only one query.(pre-compiled)
+                     PreparedStatement pstm1=connection.prepareStatement(SQLINSERTQUERY);
+                     PreparedStatement pstm2=connection.prepareStatement(SQLDELETEQUERY);
+
+Statement::It can be used to execute only static queries           
+PreparedStatement::It can be used to execute static as well as dynamic queries(chaning inputs)
+
+Statement::It might result in SQLInjection
+                eg:username:sachin
+                   password:tendulkar
+
+                    username:sachin'--(invalid)
+                    password:sachin(invalid)
+                       output:validcredentials.
+                 
+                 eg:select * from login where username='sachin' or 1=1;
+                      output:all the records along with sachin record will be pulled.
+
+PreparedStatement::It would not result in SQLInjection
+
+Statement::Inserting the date object is difficult,because we need to convert them into specific
+             format depending on the db engine(oracle,mysql)
+                   Mysql::YYYY-MM-dd
+                   Oracle::dd-MM-YYYY
+PreparedStatement:Best suitable for insertion by taking the help of setDate().
+
+
+Statement::To work with LOB object it is not prefered because setting the information of audio,video
+             is not possible in query.
+PreparedStatement:To work with LOB object,it is prefered because setting the information of audio,
+                     video is possible through setXXX().
+           signature:public void setBinaryStream(int placeholderposition,String path)throws SQLException
+           
+            eg:String sqlInsertQuery="insert into job_aspirants(id,resume,image) values(?,?,?);
+                 preparedStatement.setInt(1,10);
+                 preparedStatement.setBinaryStream(2,resume.doc);
+                 preparedStatement.setBinaryStream(3,sachin.jpg);
+
+
+
+Note:Why java.sql.Statement object leads to SQLInjection
+     ans.SQLQuery will be compiled with inputs(--),SQLQuery will be executed with inputs(--) as a result
+           of which SQLInjection occurs.
+
+      Why java.sql.PreparedStatement object doesnot leads to SQLInjection
+      ans.SQLQuery will be compile with no inputs(?,?),SQLQuery will be executed with inputs(--) by
+           referring to compiled query,as a result of which SQLInjection will not occur.
+
+
+
+
+
+
+
+
+
+
+
+
+Note:Create a table inside oracle db with the name login
+     sqlplus>connect system/root123
+     sqlplus>create table login(username varchar2(10),password varchar(2));
+     sqlplus>table created
+     sqlplus>insert into login values('sachin','tendulkar');
+     sqlplus>select * from login
+                username      password
+                sachin        tendulkar
+     sqlplus>
+
+     SQLINjection::Making special SQL instructions as a part of SQLQuery by sending them along with
+                   input values which would change the application behaviour(sqlBehaviour) is technially
+                   termed as SQLInjection
+
+      eg: username:sachin     (valid)
+          password:tendulkar  (valid)
+                No SQLInjection
+
+          username:sachin'-- (invalid)
+          password:tendulkar  (valid)
+              validcredentials because of SQLInjection behaviour of SQLQuery is changed.
+
+   SQLComments:'--  treated as singleline comment
+               /*   */   treated as multiline comment.
+
+
+
+
+
+
+
+
+
+
+
+

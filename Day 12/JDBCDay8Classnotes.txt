@@ -1,0 +1,61 @@
+In JDBC application to execute NonSelectQuery(insert,update,delete) we use executeUpdate(),
+if we use executeQuery() to execute NonSelectQuery what is the output of the application?
+Ans.Depends on DBE
+        MySQL:it results in java.sql.SQLException
+        Oracle:It would not result in Exception rather the Query will be succesfull in its
+               execution.To fetch the information of how many records got affected we use
+               method called getUpdateCount()[use this method through statement object]
+
+           Signature:public int getUpdateCount() throws java.sql.SQLException
+
+
+Note:  DML queries to execute we use executeUpdate()
+  
+       int row=statement.executeUpdate("insert ....");  
+       int row=statement.executeUpdate("update ....");
+       int row=statement.executeUpdate("delete ....");
+
+       DDL queries to exectue,if we use executeUpdate() what is the result?
+       statement.executeUpdate("create ....");
+       statement.executeUpdate("alter ....");
+       statement.executeUpdate("drop  ....");
+     Output:It returns 0 because executeUpdate() works with respect to tables info,since the
+             Query is not associated with table it returns zero.
+            If the query fails to execute by DBE it would result in java.sql.SQLException.
+
+
+** public boolean execute(String sqlQuery) throws java.sql.SQLException
+      execute() returns true as the result if the query is DRL(select Query)
+      execute() returns false as the result if the query is DML(insert,update,delete)
+      If we use execute(),then the programmer should use ifelse logic to process his code
+      based on the nature of the result given by DBE.
+
+
+Requirement:
+   Input::Query to be given as input
+   Output::Success or failure with suitable messages
+          
+    eg:input:: select * from student
+       output:: all the records of student table
+ 
+    eg:input:: insert into student(9,'lara',53)
+        ouput:: one record inserted succesfully
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

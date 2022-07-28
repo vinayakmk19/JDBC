@@ -1,0 +1,75 @@
+Steps followed to use preparedstatement in JDBC Application
+
+1.Create the sql query with placeholders
+                                     (1) (2)  (3)
+        eg:insert into student values(?,  ?,   ?);
+          position of ? starts with the index 1 and it goes on.
+          With respect to place holders the values should be set as per the
+          data types of the column specified in the table.
+
+2.Create a PreparedStatement[I] object using Connection[I]  Object
+      signature:: public PreparedStatement preparedStatement(String sqlQuery) throws SQLException;
+
+           eg:String sqlInsertQuery="insert into student values(?,?,?);";
+              preparedStatement =connection.preparedStatement(sqlInsertQuery);
+
+3.Set the values to the placeholders dynamically using setXXX().
+
+          singature::public void setXXX(int position,XXX value) throws SQLException;
+          
+           eg:String sqlInsertQuery="insert into student values(?,?,?);";
+              preparedStatement =connection.preparedStatement(sqlInsertQuery);
+              preparedStatement.setInt(1,10);
+              preparedStatemnt.setString(2,"sachin");
+              preparedStatement.setInt(3,49);
+
+4.Execute the query depending upon it Type
+     DML=======>executeUpdate()
+     DRL=======>executeQuery()
+           singature:public int executeUpdate() throws SQLException;
+                     public ResultSet executeQuery() throws SQLException;
+
+            eg:String sqlInsertQuery="insert into student values(?,?,?);";
+               preparedStatement =connection.preparedStatement(sqlInsertQuery);
+
+               preparedStatement.setInt(1,10);
+               preparedStatemnt.setString(2,"sachin");
+               preparedStatement.setInt(3,49);
+
+               int rowAffected=preparedStatement.executeUpdate();
+
+
+PreparedStatement 
+     This object can be used to execute the query with static values,dynamic values.
+
+     This object can also hold static query with inputs or without inputs.
+        eg:insert into student(18,'kohli',35);--->static with inputs
+            select * from student;---->static without inputs
+
+
+Conclusion of Statement and PreparedStatement
+
+Statement:: if the query  has to be executed only once with or without input then it is preferred to use Statement
+             in our application.
+
+PreparedStatement::if the query has to be executed muliptle times with inputs or without inputs then it is 
+                    prefered to used PreparedStatement in our application,becuse same query mulitple times being used
+                     we need to avoid compilation time at DBE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,83 @@
+Steps to create the properties file
+1.Right click on packge,type as file
+2.Select file and give the file name with extension as .properties
+3.Click on next and finsih to see the properties file.\
+
+Note:Inside the properties file the data should be stored as `key=value` pair
+     Key naming convention should be technologyname.variablename=value
+
+ProjectName
+PropertiesFileApproach
+       src
+         com.abc.mainapp
+               MainApp.java
+         com.abc.resources
+              application-dev.properties======>mysql info
+              application-test.properties=====>oracle info
+        jrelib(rt.jar)========================>JDBC API
+        mysqllib(mysql.jar)===================>MysqlImplementation  API
+        oraclelib(oracle.jar)=================>OracleImplementation API
+
+
+                  application-dev.properties
+jdbc.url=jdbc:mysql://localhost:3306/abc
+jdbc.username=root
+jdbc.pasword=root123
+
+
+                   application-test.properties
+jdbc.url=jdbc:oracle:thin:@localhost:1521:XE
+jdbc.username=system
+jdbc.pasword=root123
+
+
+
+How to take the inputs from the command line?
+ans.   D:\Advanced Java> javac com.abc.MainApp.java
+       D:\Advanced Java> java  com.abc.Mainapp   application-dev.properties
+
+The command line arguments will be stored inside the array called args.
+        args               0                 
+                    application-dev.properties
+
+Note:To give the command line arguments in eclipse,follow the steps mentioned below
+     1.Rightclick on project,go to run as configuration
+     2.click on runconfiguration
+     3.select ur project and select the .java file which contains main() logic
+     4.click on arguments tab and in program arguments specify the command line argument
+     5.click on run to execute the java pgm.
+
+     To get the complete path of the .properties files,do the following steps
+     1.Right click on the properties file and click on properties(last option in opened window)
+     2.Go to location and copy the path of the .properties file till resources.
+
+
+
+TrickyQuestion
+   In order to execute DRL like select we use executeQuery,if we use executeUpdate() what is
+the output of the program?
+    Ans.It depends on the DBE we use for our application
+         Mysql:It results in java.sql.SQLException
+         Oracle:It wont result in exception rather we can retrieve the resultSet object 
+                 through a method called getResultSet() using statement object.
+
+             Signature:public ResultSet getResultSet() throws java.sql.SQLException
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                         
+
+
+
+   

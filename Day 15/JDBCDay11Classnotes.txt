@@ -1,0 +1,142 @@
+Inserting and retrieving 'date' object into database.
+
+control flow
+  1.user will give the input
+              input----Scanner(String)----->java.
+
+  2.String object first will be converted into java.util.Date object
+             String(Object)[java.lang]------->Date(Object)[java.util]
+  
+  3.Convert the Date(Object) to DBE specific DateType using java.sql.Date Object
+               Date(object)-------->Date(Object)
+              *java.sql.Date          DBE specific
+                                         MySQL::YYYY-MM-dd
+                                         Oracle::dd-MM-YYYY
+
+
+WAP using PreparedStatement to enter id,name,DOB,DOM,DOJ,address information to store into database
+      input::id----->int
+             name--->String
+             DOB---->String
+             DOM---->String
+             DOJ---->String
+         address---->String
+ 
+**condition:: pass the DOB information as dd-MM-YYYY
+
+**condition:: pass the DOM information as MM-dd-YYYY
+
+**condition:: pass the DOJ information as YYYY-MM-dd
+
+
+To convert the String type of Object to java.util.Date object we use the following approach    
+            String dob="03-01-1996";
+            SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-YYYY");
+            java.util.Date udob=sdf.parse(dob);
+            java.sql.Date sqlDob=new java.sql.Date(udob.getTime());//udob.getTime() returns DateTime in
+                                                                      as long which is used by 
+                                                                      java.sql.Date(long Date).
+            
+            String dom="01-21-2015";
+            SimpleDateFormat sdf=new SimpleDateFormat("MM-dd-YYYY");
+
+            java.util.Date udom=sdf.parse(dom);
+            java.sql.Date sqlDom=new java.sql.Date(udom.getTime());
+
+            String doj="2020-12-15";
+            java.sql.Date sqlDoj=java.sql.Date.valueOf(doj);
+
+
+Usage of PreparedStatement
+      PreparedStatement or PreCompiledQuery can hold
+              1.select or nonSelectQuery
+              2.Static or dynamic query
+              3.query without inputs or inputs
+                                          |=====>hard coded inputs
+                                          |=====>inputs through variables
+                                          |======>direct values
+
+eg:select * from employee where  name=?        ::valid
+    select ? from employee where name='sachin' ::invalid[? belongs to only column data]
+    select * from ? where name='sachin'        ::invalid[? belongs to only column data]
+    select * from employee where ?>? or ?>?    ::invalid[? belongs to only column data]	
+
+
+note:java.sql.Statment(I)
+     java.sql.PreparedStatement(I) extends java.sql.Statement
+     java.sql.CallableStatement(I) extends java.sql.PreparedStatement
+
+
+
+Limitation of Statement
+   1.It may cause SQLInjection
+   2.Not suitable to perform Date insertion and LOB operation
+   3.Does not allows us take dyanamic input(?) as params
+   4.Same statement object cannot be used to execute with different inputs or same inputs because
+     it is not precompiled and used.
+   5.Preparing the query with a variable holding the values and converting the object to DBE query 
+     object is difficult.
+
+
+Advantages of PreparedStatement 
+   1.SQLInjection would not occur as it uses Pre-Compiled query.
+   2.It allows us to take dynamic input(?) as params
+   3.It is best suited to perform Date insertion and perform LOB operation
+   4.Same PreparedStatement object can be used to executed the query mulitple times by sending
+     dynamic inputs.
+   5.Preparing the dynamic query through place holder is very easy because of setXXX().
+
+
+EclipseShortcuts
+  systrace=====>To generate with a message
+  sysout=======>To generate a output 
+  ctrl+2,l=====>To assign the value to a local variable
+  ctrl+2,f=====>To assign the value to a fields
+  ctrl+shift+x==>To convert the String data to uppercase
+  ctrl+shift+y==>To convert the String data to lowercase
+  duplicate=====>alt+arrowDown
+  moveup========>ctrl+arrowUp
+  movedown======>ctrl+arrowDown
+  alt+shift+r===>to rename a variable or rename a file
+  alt+shift+i===>to keep the only the function without a variable
+  cntrl+shift+f==>to format the java code.
+  cntrl+del======>to delete a entire row
+  shift+end======>to select row from begining to end
+  cntrl+f11=======>to run a java pgm.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
