@@ -1,0 +1,181 @@
+W.A.P using the query to get the age of the candiate based on the id information?
+  Program can be written in 2 ways 
+   1.DB dependent query to calculate the age
+   2.DB independent query to calculate the age.
+
+  1.Query:: select datediff(now(),dob)/365.25 from employee where id=?
+          SELECT FROM_DAYS(DATEDIFF(NOW(),dob)) AS age FROM employee WHERE id=?
+
+  2.JavaPgm::select dob from employee where id=?
+           using dob calcualte the current age by fetching the current date
+
+                                 java.util.Date
+                                      | extends
+                                 java.sql.Date
+
+             Javaapplication<-------------------database
+               (java.util.Date)                  (java.sql.Date)
+
+refer to PersonAgeCalculationApp
+
+StoredProcedure
+===============
+These are named blocks that reside and execute in DB s/w having block of SQL and 
+NONSQL statement,this is just like a java method.
+
+GeneralSytax:
+ DELIMITER $$
+
+CREATE
+    
+    PROCEDURE NAME_OF_PROCEDURE()
+    
+	BEGIN
+
+	END$$
+
+DELIMITER ;
+   
+Note:To provide input to the procedure we use IN with the variables.
+     To get the output from the procedure we use OUT with the variables.
+
+EG1:Write a storedprocedure to fetch the product details based on name
+DELIMITER $$
+CREATE PROCEDURE `abc`.`GET_PRODUCT_BY_NAME`(IN pid INT,OUT productcost,OUT productname VARCHAR(10))
+    
+	BEGIN
+	    SELECT pname,pcost INTO productname,productcost FROM product WHERE id=pid;
+	END$$
+
+DELIMITER ;
+
+Note:
+	IN:: pid
+	OUT:: productcost,productname
+
+       To call stored procedure the syntax: call procedureName(input1,.....)
+
+
+To call stored procedure
+   1.CALL`GET_PRODUCT_BY_NAME`(2,@cost,@name);====>To run the storedprocedure
+   2.SELECT @cost,@name===========================>To display the output
+=================================================================================================
+
+Steps followed to execute stored procedure through java application(JDBC api)
+
+1.Establish the connection
+
+2.Create a callable Statement to execute the storeprocedure
+
+3.Set the input parameters using setXXX()
+
+4.set the output parameters by using java.sql.Types class
+                     **(to make sql datatypes compactable with java datatypes) and execute the query
+5.close the resources.
+
+
+Step1:Establish the connection
+       Connection connection=DriverManager.getConnection(url,username,password);
+
+Step2:Create a callable Statement
+      interface CallableStatement{
+
+      }
+      interface connection{
+	public CallableStatement prepareCall(String callProcedure)
+      }
+      eg::String GET_PRODUCT_BY_NAME="{CALL`GET_PRODUCT_BY_NAME`(?,?,?)}";
+          Connection connection=DriverManager.getConnection(url,username,password);
+          CallableStatement cst=connection.prepareCall(GET_PRODUCT_BY_NAME);
+
+Step3:Set the input parameters using setXXX() 
+        **IN parameters will be automatically used by setter method of CallableStatement object
+                                                                1,2,3
+     eg::String GET_PRODUCT_BY_NAME="{CALL`GET_PRODUCT_BY_NAME`(?,?,?)}";
+         Connection connection=DriverManager.getConnection(url,username,password);
+         CallableStatement cst=connection.prepareCall(GET_PRODUCT_BY_NAME);
+         System.out.print("Enter the id::");
+         int id=new Scanner().nextInt();
+         cst.setInt(1,id);
+
+Step4:set the output parameters by using java.sql.Types(c)
+       **OUT parameters should be specified explicitly the programmer using Types class fileds as
+          per the output received by DBE.
+     
+     eg::String GET_PRODUCT_BY_NAME="{CALL`GET_PRODUCT_BY_NAME`(?,?,?)}";
+         Connection connection=DriverManager.getConnection(url,username,password);
+         CallableStatement cst=connection.prepareCall(GET_PRODUCT_BY_NAME);
+         System.out.print("Enter the id::");
+         int id=new Scanner().nextInt();
+
+         //Setting the input Params
+         cst.setInt(1,id);
+
+         //Setting the output Params
+         cst.registerOutParameter(2,Types.Integer);
+         cst.registerOutParameter(3,Types.VARCHAR);
+
+         //Execute the query
+         cst.execute();
+
+          //Process the result
+          System.out.println("Product cost is ::"+cst.getInt(2));
+          System.out.println("Product name is ::"+cst.getString(3));
+
+Step5.Close the resources
+       callableStatement.close();
+       connection.close();
+       
+
+Note:CallableStatement object is an object which has implemented the interface called
+          java.sql.CallableStatement(I)
+     This object is used to execute StoreProcedure
+     It is the child interface of java.sql.PreparedStatement(I)
+     CallableStatement object works with dynamic params(?)
+     
+
+   
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+
+
+
+
+
+
+
+
+

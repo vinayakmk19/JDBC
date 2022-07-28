@@ -1,0 +1,54 @@
+In order to retreive blob information from the database we use method like
+     public InputStream getBinaryStream(int position);
+
+Boilerplatecode
+================
+It is such a type of code whose logic would remain same in majority of occasions,
+even if it changes it would minimal such a code is called as BoilerPlate code.
+
+
+int data = imageis.read();
+while (data != -1) {
+	imageos.write(data);
+        data = imageis.read();
+}
+
+We can get this boiler plate code through apache-commons-XXX.jar
+   IOUtils.copyt(InputStream,OutputStream);
+
+
+CLOB
+   It stands for Character Large Object
+   DataType:longtext
+   
+How to set character Stream data to PreparedStatement object?
+    public void setCharacterStream(int position,FileReader fileReader);
+
+Taking input and creating a stream code
+    InputFileReader ifr=new InputFileReader(pathofFile);
+    preparedStatement.setCharacterStream(3,ifr);
+
+
+How to get CharacterStream data from PreparedStatement Object?
+     public Reader getCharacterStream(int position);
+
+Writing the output to store as .txt
+     FileWriter fw=new FileWriter(pathofFile);
+     Reader reader=resultSet.getCharacterStream(3);
+     IOUtils.copy(reader,fw);
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

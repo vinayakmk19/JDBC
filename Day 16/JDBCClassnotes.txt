@@ -1,0 +1,57 @@
+MySQLDatePattern::yyyy-MM-dd
+
+jodha API(jdk8 feature)
+MM::month------>MM means 01-12,MMM--->JAN,.....DEC
+dd::date
+yyyy::year
+mm::minutes
+
+    Note::   String=====parse=========>Date(util)===getTime()=========>Date(sql)
+             Date(SQL)======format==========>String
+
+             java.util.Date                      java.sql.Date
+           1.It holds both date and time         It can only hold date
+           2.DB persistence operation            DB operation can be done directly
+              cannot be done directly
+           3.subclass of java.sql.Date           superclass is java.util.Date
+
+LOB Operation
+  It stands for Large Object
+  It is classified into two types
+    1.BLOB===>Binary large Object.
+               eg:audiofiles,videofiles,images,.....
+               MySQLDataType:blob
+    2.CLOB===>Character large Object.
+               eg:.txt files,.rtf files,.csv files,.doc,......
+               MySQLDAtaType:clob
+
+
+Streams
+    It refers to continous flow of data
+    They are two types of Streams
+    1.ByteStream
+    2.CharacterStream
+
+ByteStream::
+    It allows only byte type of data
+    To work with input operation it has InputStream,and to work with OutputOperation it has OutputStream
+           eg:FileInputStream,FileOutputStream,DataInputStream,DataOutputStream.....
+
+CharacterStream
+    It allows both character and byte of data
+    To work with input operation it has Reader,and to work with outputOperation it has Writer
+           eg::FileReader,FileWriter,BufferedReader,BufferedWriter,.....
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,24 @@
+Working with mulitple databases
+================================
+1.Single java application can interact with multiple databases.
+2.Single java application can have mulitple connection objects,Statement object,  
+   preparedStatement Object,.....
+3.Statement Object=====>To work with query execution only once
+  PreparedStatement object===>To work with query execution multiple times with
+                                 dynamic inputs.
+4.Usecase:Bank1 has acquired Bank2,it means the details of Bank2 should be transfereed to
+          Bank1 safely.
+
+    eg:Kotak Bank has acquried INGVysa Bank
+       ICCI Bank has acquired canara Bank.
+       AndhraBank has acquired Union Bank.
+
+eg::refer to OracletoMysqlDataTransferApp.java
+
+Write a java program to send the table output to browser(send it to html page).
+
+
+
+
+
+
