@@ -1,0 +1,25 @@
+TransactionManagement
+=====================
+   The process of combining related operations into single unit and executing them on the prinicple of
+"do nothing or do everything" is called as TransactionManagement.
+     EG::FundTransfer from one account to another account[tez,phonepe,...]
+         Employee Registration[insert the record into hr table,insert the same record to finance team].
+
+How to perform TransactionManagement in JDBC?
+  1.First disable the autocommit nature of the connection object.
+           connection.setAutoCommit(false);
+
+  2.Execute the persistencelogic as per the client requirement
+
+  3.if the execution is succesufl then make those changes to affect in the database through
+    connection object,otherwise revert all the operations done on the connection object.
+     reverting the opearation::connection.rollback()
+     Affecting the changes on the database:: connection.setAutoCommit(true)
+
+
+Note:Send all the queires which needs to be executed through BatchFiles.
+     if the records are affected by DBE,no of record affected wil be returned ,if the 
+     records are not affected by the execution of the query then zero will returned.
+
+
+WAP to tranfer the money from HDFC Account to ICCI Account through TransactionManagement Support.

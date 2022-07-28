@@ -1,0 +1,105 @@
+DatabaseMetaDeta(I)
+  This object holds the meta information about the database.
+  DatbaseMetaData object means it is a class which has implemented the interface
+  called java.sql.DatabaseMetaData(I)
+  There are around 50+ methods which can be applied to get the meta information
+  about the underlying database.
+  Using this MetaData,we can get to know the meta information associated with the table
+   refer::MetaDataApplication
+
+ResultSetMetaData(I)
+   This object holds the meta information about the tables like(colname,coltype,colsize)
+   which would represent ResultSet object.
+   ResulSetMetaData object means it is class which has implemented the interface
+   called java.sql.ResultSetMetaData(I)
+     **List object means,it is class which has implemented the interface called
+         java.util.List(I).
+   To get the ResultSetMetaData object,we use the following mechanism
+        resultSet=statement.executeQuery("SELECT * from student");
+        ResultSetMetaData resultSetMetaData=resultSet.getMetaData();
+   we can invoke around 20+ methods on resultSetMetaData to get the information about the 
+    resultSetObject.
+     refer::MetaDataApplication
+
+PreparedStatementMetaData(I)
+    This object holds the meta information about the dynamic params(?) associated with PreparedStatement
+    or CallableStatement.
+    PreparedStatementMetaData object means it is a class which has implemented the interface called
+    java.sql.PreparedStatementMetaData(I)
+    To get PreparedStatementMetaData,we use the following mechanism
+       preparedStatement=connection.preparedStatement("insert into product(?,?,?,?)");
+       ParameterMetaData pmdata= preparedStatement.getParameterMetaData();
+   **Driver would not support to get the parameterMetaData information from the underlying database
+     It results in SQLException.
+        refer::MetaDataApplication
+
+Using JDK-8 feature of try() with catch
+
+JDK until 1.6V
+  1.try{
+         //risky code 
+       }catch(XXXX e){
+	 //handling code
+       }finally{
+	//resource releasing code
+       }
+
+   2.try{
+	//risky code
+      }finally{
+	//resource releasing code
+      }
+
+   3.try{
+	//risky code
+     }catch(XXX e){
+	//handling code
+     }
+
+
+  4.try{
+	//risky code
+    }
+    catch(XXXX e){
+	//handling code
+    }catch(XXXX e1){
+	//handling code
+    }catch(Exception e){
+	//handling code
+    }
+
+JDK 1.7
+    try{
+
+    }catch(XXXX e1| YYYY e2 |ZZZZ e3){
+
+    }finally{
+
+    }
+
+JDK 1.8
+    try(Resource){
+
+    }//once the control comes out of try,the resource used in try will be autoclosed.
+    catch(XXX e){
+
+    }
+Till jdk7,if we want to close the resources then we should write the code explicitly in
+finally block,but from JDK1.8 we can use try() with resource,where try() will close the resource
+automatically.
+
+JDK1.7=>All the streams are not autocloseable.
+JDK1.8=>All streams and JDBC objects are also made as AutoCloseable.
+        New interface brought by the name java.lang.AutoCloseable(I)
+
+
+
+
+
+
+
+
+
+
+
+

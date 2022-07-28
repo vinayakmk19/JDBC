@@ -1,0 +1,168 @@
+Steps followed to execute stored procedure through java application(JDBC api)
+
+1.Establish the connection
+
+2.Create a callable Statement to execute the storeprocedure
+
+3.Set the input parameters using setXXX()
+
+4.set the output parameters by using java.sql.Types class
+                     **(to make sql datatypes compactable with java datatypes) and execute the query
+5.close the resources.
+==================================================================
+
+Step1:Establish the connection
+       Connection connection=DriverManager.getConnection(url,username,password);
+
+Step2:Create a callable Statement
+      interface CallableStatement{
+
+      }
+      interface connection{
+	public CallableStatement prepareCall(String callProcedure)
+      }
+      eg::String GET_PRODUCT_BY_NAME="{CALL`GET_PRODUCT_BY_NAME`(?,?,?)}";
+          Connection connection=DriverManager.getConnection(url,username,password);
+          CallableStatement cst=connection.prepareCall(GET_PRODUCT_BY_NAME);
+
+Step3:Set the input parameters using setXXX() 
+        **IN parameters will be automatically used by setter method of CallableStatement object
+                                                                1,2,3
+     eg::String GET_PRODUCT_BY_NAME="{CALL`GET_PRODUCT_BY_NAME`(?,?,?)}";
+         Connection connection=DriverManager.getConnection(url,username,password);
+         CallableStatement cst=connection.prepareCall(GET_PRODUCT_BY_NAME);
+         System.out.print("Enter the id::");
+         int id=new Scanner().nextInt();
+         cst.setInt(1,id);
+
+Step4:set the output parameters by using java.sql.Types(c)
+       **OUT parameters should be specified explicitly the programmer using Types class fileds as
+          per the output received by DBE.
+     
+     eg::String GET_PRODUCT_BY_NAME="{CALL`GET_PRODUCT_BY_NAME`(?,?,?)}";
+         Connection connection=DriverManager.getConnection(url,username,password);
+         CallableStatement cst=connection.prepareCall(GET_PRODUCT_BY_NAME);
+         System.out.print("Enter the id::");
+         int id=new Scanner().nextInt();
+
+         //Setting the input Params
+         cst.setInt(1,id);
+
+         //Setting the output Params
+         cst.registerOutParameter(2,Types.Integer);
+         cst.registerOutParameter(3,Types.VARCHAR);
+
+         //Execute the query
+         cst.execute();
+
+          //Process the result
+          System.out.println("Product cost is ::"+cst.getInt(2));
+          System.out.println("Product name is ::"+cst.getString(3));
+
+Step5.Close the resources
+       callableStatement.close();
+       connection.close();
+       
+
+Note:CallableStatement object is an object which has implemented the interface called
+          java.sql.CallableStatement(I)
+     This object is used to execute StoreProcedure
+     It is the child interface of java.sql.PreparedStatement(I)
+     CallableStatement object works with dynamic params(?)
+
+refer to StoredProcedureApplication
+
+Stored procedure to retrieve the records based on the names given by the user
+
+GET_DETAILS_BY_NAME.sql
+========================
+DELIMITER $$
+
+CREATE
+   
+    PROCEDURE `abc`.`GET_DETAILS_BY_NAME`(IN pname1 VARCHAR(10),IN pname2 VARCHAR(10))
+   
+	BEGIN
+		SELECT * FROM product WHERE pname IN (pname1,pname2)
+	END$$
+
+DELIMITER ;
+
+Inputs::IN params------>user should give(pname1,pname2)
+Output::ResultSetObject---->retrieve through getResultSet()
+
+
+MetaData
+   It refers to data about data.
+   It helps in gathering more information about the data or also helps in passing more information about
+   the data.
+
+What is the usage of MetaData?
+  It helps us in understanding more information about the data we are working with.
+
+
+MetaData in JDBC api is classified into 3 types
+1.DatabaseMetaDAta
+2.ResultSetMetaData
+3.PreparedStatementMetaData(Not supported by driver s/w)
+
+DatabaseMetaData
+    It refers to the process of dealing the information about Underlying DB used in the application,
+    database majorversion,databaseMinorversion,dataBase supportedkeywords and so on.....
+
+In order to get the information of DatabaseMetaData we use the following method call.
+    interface Connection{
+	public DataBaseMetaData getMetaDAta();
+    }
+    interface DatabaseMetaData{
+
+    }
+    class ConnectionImpl implements Connection{
+	public DatabaseMetaData getMetaData(){
+
+         }
+    }
+   
+    DatabaseMetaData d=connection.getMetaData();
+
+=============================================================
+Link to download postgreSQL
+    https://www.postgresql.org/download/windows/
+
+Link to download SQLYog
+    https://sqlyog.en.softonic.com/download
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

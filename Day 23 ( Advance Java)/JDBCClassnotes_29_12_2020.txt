@@ -1,0 +1,95 @@
+Try with resource
+=================
+JDBC Objects by default will be autoCloseable,because they have implemented the 
+interface called java.lang.AutoCloseable(I).
+JDK8 syntax
+   try(R1){
+
+   }catch(XXX e){
+	
+   }
+   
+   try(R1;R2;R3;....){
+
+   }catch(XXX e){
+
+   }
+
+eg:R1=Connection Object
+   R2=Statement Object
+   R3=ResultSet Object
+note:When there are mulitple resources then ; is compulosry b/w the resources
+     if there is only one resource,then ; is optional.
+
+R1,R2,R3 resources are effectively final or it is final variable.Since these varaibles
+  are final or effectively they should compulsorily be used w.r.t try() only.
+We should never decleare them outside like
+     Connection connection=null;
+     Statement statement=null;
+     ResultSet resultSet=null;
+
+JDK9 onwards
+  syntax:Resource R1;
+         try(R1){
+
+         }catch(XXXX e){
+
+         }
+  Even though the resource is Delcared outside still it is effectively final or it is final.
+
+Since the resource object is declared outside the try,still the resource can be accesed outside
+the try,but using the resource we cannot perform any operation,if we try to do it would result
+in Exception.
+
+	Refer::JDK9App(Try with Resource) use jdk9 and above
+
+BatchProcessing/BatchUpdations
+  Normally in jdbc applications,to execute 'n' query we use 2*n networks calls.since we use
+the network frequently the application performance will be reduced.To overcome this problem
+we use batch updations
+       Refer::networkcalls.png
+
+BatchUpdation refers to process of using the network calls only twice irrespective the no
+of queries which needs to be executed.
+    In BatchUpation,to execute 'n' query we use only 2 times the network calls.
+ Refer::Batchfiles.png
+
+
+To do BatchUpdation in JDBC we use the following approach
+   Statement statement=connection.createStatement();
+    
+   #1.Adding all the queries to the BatchFiles
+   statement.addBatch("insert into  student values(10,'sachin',48)");
+   statement.addBatch("insert into student values(18,'kohli',35)");
+   statement.addBatch("delete from student where sid=18");
+   statement.addBatch("update student set sname='sachintendulkar' where sid=10");
+
+   #2.Executing the Batch files by instructing DBE
+   int result[]=statement.executeBatch();
+
+   #3.Process the results
+    int total=0
+   for(int row:result){
+     total+=row; 
+   }
+   #4.printing the no of records affected in the database
+   System.out.println("No of rows affected is ::"+total);
+
+
+Note:In case of BatchFiles,during the execution even if one of the query fails with its 
+     execution,still the other queries will be executed by the databaseEngine.
+     In case of BatchFiles,only NonSelectSQLQueries can be executed because the return type
+     of executeBatch is int[],it wont have the power to hold ResultSetObject.
+
+
+Refer::BatchFilepgm
+
+
+
+
+
+
+
+
+
+

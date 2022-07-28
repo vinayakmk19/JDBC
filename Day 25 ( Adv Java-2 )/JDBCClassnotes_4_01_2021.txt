@@ -1,0 +1,248 @@
+TransactionManagement
+	In case of Transaction,the programmer has to do the following things
+1.Make Connection object autocommit() nature to false
+2.Perform Persistence logic
+3.Depending upon the persistenc logic result,commit the operations on to database
+  or rollback the operations done on the database.
+
+Note::
+In Frameworks like hiberante,SpringORM,SpringData we get TransactionManagement effect
+for free of cost with the help of Annotation called @Transactional.
+   
+   @Transactional
+eg:public void insertData(){
+	//logic of Persistence Operation
+   }
+
+
+Explain the nature of exeute in JDBC Api?
+  1.execute()::This method is used to perform both select and Non select operation
+               This method is used to perform StoredProcecdure
+
+  2.executeUpdate()::This method is used to perform only NonSelect Operation
+                           (insert,update,delete)
+
+  3.exeucteQuery()::This method is used to perform only Select operation
+                            (select)
+
+  4.executeBatch()::This method is used to exeucte the batchfiles.
+
+
+Why commit and rollback operation is done on Connection Object only?
+    We can perform persistence operation through Statement object as well as through
+PreparedStatement object,rather than specifiying commit() and rollback() inside
+these two obects we have commit() and rollback() operations of Connection objects because
+Statement and PreparedStatement object gets created only through Connection object only.
+
+
+Working with UnConvential DBS/ws
+1.Excel Sheet
+      Store the data
+2.CSV Files(Common Seperated Values)
+      Store the data
+
+Convential DB S/W
+1.Oracle
+2.MySQL
+
+NoSQL
+ 1.mongoDB
+ 2.Cassandra
+ 3.Couche...
+
+UseCase:: 
+         1.In case of temperory Storage like getting 3 months transaction done on the
+           account we use EXCELSHEET Files,where as to store the data permanently for
+           long term usage we use DB S/W
+         2.Teachers collecting the census information giving it to DataEntryOperators
+           where the data will stored inside EXCELSHEET, and data gets stored permanently inside the 
+           database for long term usage.
+
+Working with ExcelSheet to store the data.
+
+Conventional Database
+    Database
+        Table
+           Records
+
+UnConvential Database
+    WorkBook
+        Sheet
+           Records
+
+eg:Student
+        studentrecords
+               id name age address
+               -   -    -    -
+
+To work with ExcelSheet or with CSV files,we have Type4 drives s/w avialble which is given by company called HXTT.
+
+Driver s/w name::Excel_JDBC42.jar
+Driver className:com.hxtt.sql.excel.ExcelDriver
+Driver url::<jdbc:Excel:///location of excelworkbook>
+
+Code will be written  just the way we wrote for Convential DBS/w
+ 1.Connection Object
+ 2.Statement Object
+ 3.PreparedStatement Object
+ 4.ResultSet Object
+
+Syntax to write select Query
+   select * from workbook.sheetName
+   select col1,col2,.. from workbook.sheetName
+
+Syntax to write insert query
+    insert into workbook.sheetName values(?,?,?...)
+
+Note::Queries are not case sensitive
+
+
+refer ExcelApp
+            ExcelSelectApp.java
+            ExcelInsertApp.java
+
+CSV Files
+  It stands for Comma Seperator value files
+  
+eg:sachin,47,MI
+   dravid,46,RCB
+   saurav,45,KKR
+
+Driver S/w:Text_JDBC42.jar
+Driver Class:com.hxtt.sql.text.TextDriver
+Driver URL:jdbc:Text:///<location of CSV file>
+
+Syntax to write SQLQuery
+Query:: select * from filename.csv
+
+refer CSVApp
+          CSVSelectApp.java
+          CSVInsertApp.java
+
+
+link for downloading the driver s/w
+   http://www.hxtt.com/text.html(both Excel and CSV driver s/w)
+
+
+ResultSet(I)
+    ReadOnlyResultSetType:It indicates we can only perform readonly operation on the  resultSet object
+                           int CONCUR_READ_ONLY = 1007;
+    UpdateableResultSetType:It indicates we can perform CRUD operation without using any SQLQuery using resultSet                                 Object.
+                           int CONCUR_UPDATABLE = 1008;
+
+
+Based On Cursor Movement
+   1.Top to Bottom
+            It represent the resultSet object cursor can be moved form Top to Bottom while retreivng the records
+            from the resultSet object
+                        int TYPE_FORWARD_ONLY = 1003;
+   2.Bottom to Top
+            It represent the resultSet object cursor can be moved form  Bottom to top while retreivng the records
+            from the resultSet object
+
+Based on the changes made in the database during the execution of the java application
+   ScrollableResultSet
+        1.SensitiveScrollableResultSet
+               If the changes happend on the database,if those changes gets reflected automatically on to the
+               existing resultSet then we say resultSet object is SensitiveScrollableResultSet.
+                     int TYPE_SCROLL_SENSITIVE = 1005
+
+
+        2.InSensitiveScrollableResultSet
+                 If the changes had happend on the database,if those changes doesnot get reflected  on to the
+                 existing resultSet then we say resultSet object is InSensitiveScrollableResultSet.
+                             int TYPE_SCROLL_INSENSITIVE = 1004;
+
+
+By default ResultSet object will be 
+   1.Forward Only
+   2.ReadOnly
+
+Methods of ResultSet Object
+  1.getXXX()
+  2.next()
+  3.getRow()
+
+
+To change the nature of the ResultObject to programming requriement we use the following things
+  1.Use the statement Object and set the changes requried as shown below
+             Statement statement=connection.createStatement                                                                       (ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+             ResultSet resultSet=statement.executeQuery("select * from student");
+
+Methods of ResultSet Object with Changes
+   1.getXXX()
+   2.next()
+   3.getRow()====>It returns the row no of the retrieved record
+   4.previous()==>It checks whether the previous records exists or not if exists it returns true
+   5.first()=====>It takes the cursor to the first record.
+   6.last()======>It takes the cursor to the last Record.
+   7.absolute()==>It takes the cursor to the specified Postition given by the user
+                        It takes both +ve and -ve value
+                        If it is positive then direction is from Top to Botton.
+                        It it is negative then direction is from Bottom to Top.
+   8.relative()
+
+
+
+
+We can check whether the database support ScrollableNature and ReadOnly Nature through MetaDataInformation
+      System.out.println("ResultSet in BackWard Direction with ReadOnly Operation:: " + databaseMetaData
+					.supportsResultSetConcurrency(ResultSet.TYPE_FORWARD_ONLY,                                                                        ResultSet.CONCUR_READ_ONLY));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
